@@ -27,7 +27,9 @@ while(cap.isOpened()):
         # landmarks = np.matrix([[p.x, p.y] for p in shape.parts()])
         # for num in range(shape.num_parts):
             # cv2.circle(frame, (shape.parts()[num].x, shape.parts()[num].y), 3, (0,255,0), -1)
-        cv2.rectangle(frame,(shape[29][1],shape[33][1]), (shape[54][0],shape[12][0]),(255,0,0),2)
+        cv2.imshow('test',frame[shape[29][1]:shape[33][1], shape[54][0]:shape[12][0]])
+        cv2.rectangle(frame,(shape[54][0],shape[29][1]), (shape[12][0],shape[33][1]),(255,0,0),2)
+        cv2.rectangle(frame,(shape[4][0],shape[29][1]), (shape[48][0],shape[33][1]),(255,0,0),2)
             # cv2.rectangle(frame,shape[29][1]:shape[33][1], shape[4][0]:shape[48][0],(255,0,0),2)
     cv2.imshow('frame', frame)
     out.write(frame)
