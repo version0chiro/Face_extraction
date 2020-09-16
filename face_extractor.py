@@ -12,7 +12,7 @@ fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
 out = cv2.VideoWriter('output.avi',fourcc, 20.0, (1280, 720))
 
-predictor_path = 'shape_predictor_68_face_landmarks.dat'
+predictor_path = 'shape_predictor_81_face_landmarks.dat'
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(predictor_path)
@@ -28,6 +28,7 @@ while(cap.isOpened()):
         # for num in range(shape.num_parts):
             # cv2.circle(frame, (shape.parts()[num].x, shape.parts()[num].y), 3, (0,255,0), -1)
         cv2.imshow('test',frame[shape[29][1]:shape[33][1], shape[54][0]:shape[12][0]])
+        cv2.rectangle(frame,(shape[69][0],shape[76][1]),(shape[72][0],shape[26][1]),(255,0,0),2)
         cv2.rectangle(frame,(shape[54][0],shape[29][1]), (shape[12][0],shape[33][1]),(255,0,0),2)
         cv2.rectangle(frame,(shape[4][0],shape[29][1]), (shape[48][0],shape[33][1]),(255,0,0),2)
             # cv2.rectangle(frame,shape[29][1]:shape[33][1], shape[4][0]:shape[48][0],(255,0,0),2)
