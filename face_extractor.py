@@ -7,19 +7,7 @@ import numpy as np
 import cv2
 from imutils import face_utils
 
-cap = cv2.VideoCapture(0)
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-
-# out = cv2.VideoWriter('output.avi',fourcc, 20.0, (1280, 720))
-
-predictor_path = 'shape_predictor_81_face_landmarks.dat'
-
-detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor(predictor_path)
-
-while(cap.isOpened()):
-    ret, frame = cap.read()
-    frame = cv2.flip(frame, 1)
+def rgbSplitter(frame):
     image = frame
     b = image.copy()
     # set green and red channels to 0
@@ -36,6 +24,23 @@ while(cap.isOpened()):
     # set blue and green channels to 0
     r[:, :, 0] = 0
     r[:, :, 1] = 0
+
+    return (b,g,r)
+
+
+cap = cv2.VideoCapture(0)
+
+# out = cv2.VideoWriter('output.avi',fourcc, 20.0, (1280, 720))
+
+predictor_path = 'shape_predictor_81_face_landmarks.dat'
+
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor(predictor_path)
+
+while(cap.isOpened()):
+    ret, frame = cap.read()
+    frame = cv2.flip(frame, 1)
+    (b,g,r)=rgbSplitter(frame)
     dets = detector(frame, 0)
     for k, d in enumerate(dets):
         shape = predictor(frame, d)
