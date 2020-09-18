@@ -10,7 +10,7 @@ from imutils import face_utils
 cap = cv2.VideoCapture(0)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
-out = cv2.VideoWriter('output.avi',fourcc, 20.0, (1280, 720))
+# out = cv2.VideoWriter('output.avi',fourcc, 20.0, (1280, 720))
 
 predictor_path = 'shape_predictor_81_face_landmarks.dat'
 
@@ -20,6 +20,22 @@ predictor = dlib.shape_predictor(predictor_path)
 while(cap.isOpened()):
     ret, frame = cap.read()
     frame = cv2.flip(frame, 1)
+    image = frame
+    b = image.copy()
+    # set green and red channels to 0
+    b[:, :, 1] = 0
+    b[:, :, 2] = 0
+
+
+    g = image.copy()
+    # set blue and red channels to 0
+    g[:, :, 0] = 0
+    g[:, :, 2] = 0
+
+    r = image.copy()
+    # set blue and green channels to 0
+    r[:, :, 0] = 0
+    r[:, :, 1] = 0
     dets = detector(frame, 0)
     for k, d in enumerate(dets):
         shape = predictor(frame, d)
@@ -32,8 +48,11 @@ while(cap.isOpened()):
         cv2.rectangle(frame,(shape[54][0],shape[29][1]), (shape[12][0],shape[33][1]),(255,0,0),2)
         cv2.rectangle(frame,(shape[4][0],shape[29][1]), (shape[48][0],shape[33][1]),(255,0,0),2)
             # cv2.rectangle(frame,shape[29][1]:shape[33][1], shape[4][0]:shape[48][0],(255,0,0),2)
+
     cv2.imshow('frame', frame)
-    out.write(frame)
+    cv2.imshow('0', b)
+    cv2.imshow('1', g)
+    cv2.imshow('2', r)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         print("q pressed")
         break
